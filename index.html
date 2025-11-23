@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Аудиоподарок для тебя!</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            text-align: center; 
+            padding: 50px; 
+            background-color: #f0f0f0;
+        }
+        #audioPlayer { 
+            margin: 20px auto; 
+            display: block; 
+        }
+        .message { 
+            margin-bottom: 30px; 
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="message">
+        <h1>Для тебя особое сообщение 💝</h1>
+        <p>Тыкай кнопочку</p>
+    </div>
+    <audio id="audioPlayer" controls autoplay>
+        <!-- ЗАМЕНИТЕ ссылку ниже на вашу "сырую" ссылку -->
+        <source src="https://raw.githubusercontent.com/bismarckjohn70-web/Katyunya.github.io/main/audio.ogg" type="audio/ogg">
+        Ваш браузер не поддерживает аудио элемент.
+    </audio>
+
+    <script>
+        // Этот скрипт пытается запустить аудио автоматически
+        document.getElementById('audioPlayer').play().catch(function(error) {
+            // Если автозапуск не сработал (например, на iOS), в консоли будет ошибка,
+            // но пользователь увидит плеер и сможет нажать кнопку Play вручную.
+            console.log('Автовоспроизведение не сработало: ' + error);
+        });
+    </script>
+</body>
+</html>
