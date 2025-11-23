@@ -26,15 +26,14 @@
         <p>Тыкай кнопочку</p>
     </div>
     <audio id="audioPlayer" controls autoplay>
-        <!-- ЗАМЕНИТЕ ссылку ниже на вашу "сырую" ссылку -->
         <source src="https://raw.githubusercontent.com/bismarckjohn70-web/Katyunya.github.io/main/audio.ogg" type="audio/ogg">
         Ваш браузер не поддерживает аудио элемент.
     </audio>
 
     <script>
-        // Этот скрипт пытается запустить аудио автоматически
+        // скрипт пытается запустить аудио автоматически
         document.getElementById('audioPlayer').play().catch(function(error) {
-            // Если автозапуск не сработал (например, на iOS), в консоли будет ошибка,
+            // если автозапуск не сработал (например, на iOS), в консоли будет ошибка,
             // но пользователь увидит плеер и сможет нажать кнопку Play вручную.
             console.log('Автовоспроизведение не сработало: ' + error);
         });
