@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>С Днём Рождения!</title>
+    <title>💖С Днём Рождения, дорогая Катюня!💖</title>
     <style>
         body {
             margin: 0;
@@ -87,16 +87,15 @@
         <h1>🎂 С Днём Рождения! 🎉</h1>
         
         <div class="message">
-            Для тебя есть особое аудиопослание! Нажми на кнопку ниже, чтобы послушать его.
+            Моя честная реакция на всё, что с тобой связано:
         </div>
 
         <button class="play-btn" id="playButton">
-            ▶️ Включить послание
+            ▶️ Ахуеть
         </button>
 
         <div class="hearts" id="hearts">💖</div>
 
-        <!-- Аудио элемент скрыт, управляется через кнопку -->
         <audio id="audioPlayer" preload="metadata">
             <source src="2_5429555114228609041.ogg" type="audio/ogg">
             Ваш браузер не поддерживает аудио элементы.
@@ -112,7 +111,6 @@
 
         playButton.addEventListener('click', function() {
             if (!isPlaying) {
-                // Начинаем воспроизведение
                 audioPlayer.play().then(() => {
                     isPlaying = true;
                     playButton.classList.add('playing');
