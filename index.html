@@ -2,40 +2,153 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Аудиоподарок для тебя!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>С Днём Рождения!</title>
     <style>
-        body { 
-            font-family: Arial, sans-serif; 
-            text-align: center; 
-            padding: 50px; 
-            background-color: #f0f0f0;
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ffb6c1, #ff69b4);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
         }
-        #audioPlayer { 
-            margin: 20px auto; 
-            display: block; 
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+            margin: 20px;
         }
-        .message { 
-            margin-bottom: 30px; 
-            color: #333;
+
+        h1 {
+            color: #ff1493;
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .message {
+            color: #555;
+            font-size: 18px;
+            line-height: 1.5;
+            margin-bottom: 30px;
+        }
+
+        .play-btn {
+            background: linear-gradient(45deg, #ff1493, #ff69b4);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.4);
+        }
+
+        .play-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 20, 147, 0.6);
+        }
+
+        .play-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .play-btn.playing {
+            background: linear-gradient(45deg, #ff69b4, #ff1493);
+            animation: pulse 1.5s infinite;
+        }
+
+        .hearts {
+            font-size: 24px;
+            margin-top: 20px;
+            color: #ff1493;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div class="message">
-        <h1>Для тебя особое сообщение 💝</h1>
-        <p>Тыкай кнопочку</p>
+    <div class="container">
+        <h1>🎂 С Днём Рождения! 🎉</h1>
+        
+        <div class="message">
+            Для тебя есть особое аудиопослание! Нажми на кнопку ниже, чтобы послушать его.
+        </div>
+
+        <button class="play-btn" id="playButton">
+            ▶️ Включить послание
+        </button>
+
+        <div class="hearts" id="hearts">💖</div>
+
+        <!-- Аудио элемент скрыт, управляется через кнопку -->
+        <audio id="audioPlayer" preload="metadata">
+            <!-- ЗАМЕНИТЕ на вашу ссылку из GitHub -->
+            <source src="ВАША_ССЫЛКА_НА_АУДИОФАЙЛ.ogg" type="audio/ogg">
+            <source src="ВАША_ССЫЛКА_НА_АУДИОФАЙЛ.mp3" type="audio/mpeg">
+            Ваш браузер не поддерживает аудио элементы.
+        </audio>
     </div>
-    <audio id="audioPlayer" controls autoplay>
-        <source src="https://raw.githubusercontent.com/bismarckjohn70-web/Katyunya.github.io/main/audio.ogg" type="audio/ogg">
-        Ваш браузер не поддерживает аудио элемент.
-    </audio>
 
     <script>
-        // скрипт пытается запустить аудио автоматически
-        document.getElementById('audioPlayer').play().catch(function(error) {
-            // если автозапуск не сработал (например, на iOS), в консоли будет ошибка,
-            // но пользователь увидит плеер и сможет нажать кнопку Play вручную.
-            console.log('Автовоспроизведение не сработало: ' + error);
+        const playButton = document.getElementById('playButton');
+        const audioPlayer = document.getElementById('audioPlayer');
+        const hearts = document.getElementById('hearts');
+
+        let isPlaying = false;
+
+        playButton.addEventListener('click', function() {
+            if (!isPlaying) {
+                // Начинаем воспроизведение
+                audioPlayer.play().then(() => {
+                    isPlaying = true;
+                    playButton.classList.add('playing');
+                    playButton.innerHTML = '⏸️ Пауза';
+                    hearts.innerHTML = '🎵 Слушай... 💝';
+                }).catch(error => {
+                    console.log('Ошибка воспроизведения:', error);
+                    alert('Не удалось воспроизвести аудио. Проверьте ссылку на файл.');
+                });
+            } else {
+                // Ставим на паузу
+                audioPlayer.pause();
+                isPlaying = false;
+                playButton.classList.remove('playing');
+                playButton.innerHTML = '▶️ Продолжить';
+                hearts.innerHTML = '💖';
+            }
+        });
+
+        // Когда аудио заканчивается
+        audioPlayer.addEventListener('ended', function() {
+            isPlaying = false;
+            playButton.classList.remove('playing');
+            playButton.innerHTML = '▶️ Включить снова';
+            hearts.innerHTML = '🎉 💖 🎂';
+        });
+
+        // Если произошла ошибка загрузки аудио
+        audioPlayer.addEventListener('error', function() {
+            console.log('Ошибка загрузки аудио');
+            playButton.disabled = true;
+            playButton.innerHTML = '❌ Ошибка загрузки';
+            playButton.style.background = '#ccc';
+            hearts.innerHTML = '😢';
         });
     </script>
 </body>
